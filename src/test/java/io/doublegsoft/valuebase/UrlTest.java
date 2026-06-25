@@ -10,7 +10,7 @@ public class UrlTest {
 
   @Test
   public void test_url_0() throws Exception {
-    String expr = "://simple_object?param1=var1&param2>var2&param3<=var3.first_day_of_week";
+    String expr = "simple_object?param1=var1&param2>var2&param3<=var3.first_day_of_week";
     io.doublegsoft.valuebase.ValuebaseParser.Valuebase_urlContext ctxUrl = parse(expr);
     Assert.assertEquals("simple_object", ctxUrl.obj.getText());
   }
