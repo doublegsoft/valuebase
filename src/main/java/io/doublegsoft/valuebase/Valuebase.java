@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Valuebase {
 
-  public static UrlDefinition url(String expr) {
+  public UrlDefinition url(String expr) {
     UrlDefinition retVal = new UrlDefinition();
     CharStream input = CharStreams.fromString(expr);
     io.doublegsoft.valuebase.ValuebaseLexer lexer = new io.doublegsoft.valuebase.ValuebaseLexer(input);
