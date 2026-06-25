@@ -102,6 +102,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.doublegsoft.jcommons</groupId>
+      <artifactId>jcommons-metavalue</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4</artifactId>
       <version>4.9.3</version>
