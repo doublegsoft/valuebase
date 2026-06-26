@@ -19,25 +19,34 @@ public class Valuebase {
     retVal.setResource(ctx.obj.getText());
     for (io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_paramContext ctxParam : ctx.valuebase_url_param()) {
       UrlParamDefinition param = new UrlParamDefinition();
-      param.setName(ctxParam.name.getText());
-      param.setComparator(ctxParam.comparator.getText());
+      if (ctxParam.name != null) {
+        param.setName(ctxParam.name.getText());
+      } else if (ctxParam.object != null) {
+        param.setName(ctxParam.object.getText());
+        param.setType(ValueType.OBJECT);
+      }
+      if (ctxParam.comparator != null) {
+        param.setComparator(ctxParam.comparator.getText());
+      }
       io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_valueContext ctxVal = ctxParam.valuebase_url_value();
-      io.doublegsoft.valuebase.ValuebaseParser.Anybase_valueContext ctxAnyVal = ctxVal.anybase_value();
-      if (ctxAnyVal.anybase_identifier() != null) {
-        param.setValue(ctxAnyVal.anybase_identifier().getText());
-        param.setType(ValueType.VARIABLE);
-      } else if (ctxAnyVal.anybase_string() != null) {
-        param.setValue(ctxAnyVal.anybase_string().getText());
-        param.setType(ValueType.STRING);
-      } else if (ctxAnyVal.anybase_number() != null) {
-        param.setValue(ctxAnyVal.anybase_number().getText());
-        param.setType(ValueType.NUMBER);
-      } else if (ctxAnyVal.anybase_date() != null) {
-        param.setValue(ctxAnyVal.anybase_date().getText());
-        param.setType(ValueType.DATE);
-      } else if (ctxAnyVal.anybase_datetime() != null) {
-        param.setValue(ctxAnyVal.anybase_date().getText());
-        param.setType(ValueType.DATETIME);
+      if (ctxVal != null) {
+        io.doublegsoft.valuebase.ValuebaseParser.Anybase_valueContext ctxAnyVal = ctxVal.anybase_value();
+        if (ctxAnyVal.anybase_identifier() != null) {
+          param.setValue(ctxAnyVal.anybase_identifier().getText());
+          param.setType(ValueType.VARIABLE);
+        } else if (ctxAnyVal.anybase_string() != null) {
+          param.setValue(ctxAnyVal.anybase_string().getText());
+          param.setType(ValueType.STRING);
+        } else if (ctxAnyVal.anybase_number() != null) {
+          param.setValue(ctxAnyVal.anybase_number().getText());
+          param.setType(ValueType.NUMBER);
+        } else if (ctxAnyVal.anybase_date() != null) {
+          param.setValue(ctxAnyVal.anybase_date().getText());
+          param.setType(ValueType.DATE);
+        } else if (ctxAnyVal.anybase_datetime() != null) {
+          param.setValue(ctxAnyVal.anybase_date().getText());
+          param.setType(ValueType.DATETIME);
+        }
       }
       retVal.addParam(param);
     }
