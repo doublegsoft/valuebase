@@ -2,6 +2,7 @@ package io.doublegsoft.valuebase;
 
 import com.doublegsoft.jcommons.metavalue.UrlDefinition;
 import com.doublegsoft.jcommons.metavalue.UrlParamDefinition;
+import com.doublegsoft.jcommons.metavalue.ValueType;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -24,7 +25,19 @@ public class Valuebase {
       io.doublegsoft.valuebase.ValuebaseParser.Anybase_valueContext ctxAnyVal = ctxVal.anybase_value();
       if (ctxAnyVal.anybase_identifier() != null) {
         param.setValue(ctxAnyVal.anybase_identifier().getText());
-        param.setType("object");
+        param.setType(ValueType.VARIABLE);
+      } else if (ctxAnyVal.anybase_string() != null) {
+        param.setValue(ctxAnyVal.anybase_string().getText());
+        param.setType(ValueType.STRING);
+      } else if (ctxAnyVal.anybase_number() != null) {
+        param.setValue(ctxAnyVal.anybase_number().getText());
+        param.setType(ValueType.NUMBER);
+      } else if (ctxAnyVal.anybase_date() != null) {
+        param.setValue(ctxAnyVal.anybase_date().getText());
+        param.setType(ValueType.DATE);
+      } else if (ctxAnyVal.anybase_datetime() != null) {
+        param.setValue(ctxAnyVal.anybase_date().getText());
+        param.setType(ValueType.DATETIME);
       }
       retVal.addParam(param);
     }
