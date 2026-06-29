@@ -1,8 +1,6 @@
 package io.doublegsoft.valuebase;
 
-import com.doublegsoft.jcommons.metavalue.UrlDefinition;
-import com.doublegsoft.jcommons.metavalue.UrlParamDefinition;
-import com.doublegsoft.jcommons.metavalue.ValueType;
+import com.doublegsoft.jcommons.metavalue.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -49,6 +47,24 @@ public class Valuebase {
         }
       }
       retVal.addParam(param);
+    }
+    return retVal;
+  }
+
+  public ActionDefinition action(String expr) {
+    ActionDefinition retVal = new ActionDefinition();
+    CharStream input = CharStreams.fromString(expr);
+    io.doublegsoft.valuebase.ValuebaseLexer lexer = new io.doublegsoft.valuebase.ValuebaseLexer(input);
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    io.doublegsoft.valuebase.ValuebaseParser parser = new io.doublegsoft.valuebase.ValuebaseParser(tokens);
+    io.doublegsoft.valuebase.ValuebaseParser.Valuebase_actionContext ctx = parser.valuebase_action();
+    retVal.setType(ActionType.getActionType(ctx.getText().substring(0, 1)));
+    if (ctx.res != null) {
+      retVal.setResource(ctx.res.resource.getText());
+      retVal.setMethod(ctx.res.method.getText());
+    }
+    if (ctx.path != null) {
+      retVal.setPath(ctx.path.getText());
     }
     return retVal;
   }
