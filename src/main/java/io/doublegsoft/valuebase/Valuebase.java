@@ -65,6 +65,7 @@ public class Valuebase {
     }
     if (ctx.path != null) {
       retVal.setPath(ctx.path.getText());
+      retVal.setResource(retVal.getPath().substring(retVal.getPath().lastIndexOf("/") + 1));
     }
     return retVal;
   }
