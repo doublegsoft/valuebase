@@ -16,37 +16,7 @@ public class Valuebase {
     io.doublegsoft.valuebase.ValuebaseParser.Valuebase_urlContext ctx = parser.valuebase_url();
     retVal.setResource(ctx.obj.getText());
     for (io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_paramContext ctxParam : ctx.valuebase_url_param()) {
-      UrlParamDefinition param = new UrlParamDefinition();
-      if (ctxParam.name != null) {
-        param.setName(ctxParam.name.getText());
-      } else if (ctxParam.object != null) {
-        param.setName(ctxParam.object.getText());
-        param.setType(ValueType.OBJECT);
-      }
-      if (ctxParam.comparator != null) {
-        param.setComparator(ctxParam.comparator.getText());
-      }
-      io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_valueContext ctxVal = ctxParam.valuebase_url_value();
-      if (ctxVal != null) {
-        io.doublegsoft.valuebase.ValuebaseParser.Anybase_valueContext ctxAnyVal = ctxVal.anybase_value();
-        if (ctxAnyVal.anybase_identifier() != null) {
-          param.setValue(ctxAnyVal.anybase_identifier().getText());
-          param.setType(ValueType.VARIABLE);
-        } else if (ctxAnyVal.anybase_string() != null) {
-          param.setValue(ctxAnyVal.anybase_string().getText());
-          param.setType(ValueType.STRING);
-        } else if (ctxAnyVal.anybase_number() != null) {
-          param.setValue(ctxAnyVal.anybase_number().getText());
-          param.setType(ValueType.NUMBER);
-        } else if (ctxAnyVal.anybase_date() != null) {
-          param.setValue(ctxAnyVal.anybase_date().getText());
-          param.setType(ValueType.DATE);
-        } else if (ctxAnyVal.anybase_datetime() != null) {
-          param.setValue(ctxAnyVal.anybase_date().getText());
-          param.setType(ValueType.DATETIME);
-        }
-      }
-      retVal.addParam(param);
+      retVal.addParam(createParam(ctxParam));
     }
     return retVal;
   }
@@ -66,6 +36,43 @@ public class Valuebase {
     if (ctx.path != null) {
       retVal.setPath(ctx.path.getText());
       retVal.setResource(retVal.getPath().substring(retVal.getPath().lastIndexOf("/") + 1));
+      for (io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_paramContext ctxParam : ctx.valuebase_url_param()) {
+        retVal.addParam(createParam(ctxParam));
+      }
+    }
+    return retVal;
+  }
+
+  private UrlParamDefinition createParam(io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_paramContext ctxParam) {
+    UrlParamDefinition retVal = new UrlParamDefinition();
+    if (ctxParam.name != null) {
+      retVal.setName(ctxParam.name.getText());
+    } else if (ctxParam.object != null) {
+      retVal.setName(ctxParam.object.getText());
+      retVal.setType(ValueType.OBJECT);
+    }
+    if (ctxParam.comparator != null) {
+      retVal.setComparator(ctxParam.comparator.getText());
+    }
+    io.doublegsoft.valuebase.ValuebaseParser.Valuebase_url_valueContext ctxVal = ctxParam.valuebase_url_value();
+    if (ctxVal != null) {
+      io.doublegsoft.valuebase.ValuebaseParser.Anybase_valueContext ctxAnyVal = ctxVal.anybase_value();
+      if (ctxAnyVal.anybase_identifier() != null) {
+        retVal.setValue(ctxAnyVal.anybase_identifier().getText());
+        retVal.setType(ValueType.VARIABLE);
+      } else if (ctxAnyVal.anybase_string() != null) {
+        retVal.setValue(ctxAnyVal.anybase_string().getText());
+        retVal.setType(ValueType.STRING);
+      } else if (ctxAnyVal.anybase_number() != null) {
+        retVal.setValue(ctxAnyVal.anybase_number().getText());
+        retVal.setType(ValueType.NUMBER);
+      } else if (ctxAnyVal.anybase_date() != null) {
+        retVal.setValue(ctxAnyVal.anybase_date().getText());
+        retVal.setType(ValueType.DATE);
+      } else if (ctxAnyVal.anybase_datetime() != null) {
+        retVal.setValue(ctxAnyVal.anybase_date().getText());
+        retVal.setType(ValueType.DATETIME);
+      }
     }
     return retVal;
   }
