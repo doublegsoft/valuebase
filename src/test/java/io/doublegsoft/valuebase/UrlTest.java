@@ -27,6 +27,14 @@ public class UrlTest {
     Assert.assertEquals(ValueType.OBJECT, url.getParams().get(0).getType());
   }
 
+  @Test
+  public void test_url_2() throws Exception {
+    String expr = "simple_object?abc";
+    UrlDefinition url = new Valuebase().url(expr);
+    Assert.assertEquals("simple_object", url.getResource());
+    Assert.assertEquals("abc", url.getParams().get(0).getName());
+  }
+
   private io.doublegsoft.valuebase.ValuebaseParser.Valuebase_urlContext parse(String expr) throws Exception {
     CharStream input = CharStreams.fromString(expr);
     io.doublegsoft.valuebase.ValuebaseLexer lexer = new io.doublegsoft.valuebase.ValuebaseLexer(input);
