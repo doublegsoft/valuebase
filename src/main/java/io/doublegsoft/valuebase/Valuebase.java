@@ -30,7 +30,11 @@ public class Valuebase {
     io.doublegsoft.valuebase.ValuebaseParser.Valuebase_actionContext ctx = parser.valuebase_action();
     retVal.setType(ActionType.getActionType(ctx.getText().substring(0, 1)));
     if (ctx.res != null) {
-      retVal.setResource(ctx.res.resource.getText());
+      String resText = ctx.res.resource.getText();
+      if (resText.startsWith("$")) {
+        resText = resText.substring(1);
+      }
+      retVal.setResource(resText);
       retVal.setMethod(ctx.res.method.getText());
     }
     if (ctx.path != null) {
