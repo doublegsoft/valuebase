@@ -35,7 +35,9 @@ public class Valuebase {
         resText = resText.substring(1);
       }
       retVal.setResource(resText);
-      retVal.setMethod(ctx.res.method.getText());
+      if (ctx.res.method != null) {
+        retVal.setMethod(ctx.res.method.getText());
+      }
     }
     if (ctx.path != null) {
       retVal.setPath(ctx.path.getText());
